@@ -1,5 +1,5 @@
 
-public class PerfectNumber{
+public class PerfectNumberOptimizado {
 
    
        public static void main(String[] args) {
@@ -9,7 +9,7 @@ public class PerfectNumber{
         long startTime= System.nanoTime();
         int s=0;
         int n=986598;
-        for(int i=1;i<n;i++){
+        for(int i=1;i<=n/2;i++){
             if(n%i==0){
                 s+=i;
                 
