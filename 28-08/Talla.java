@@ -4,7 +4,7 @@ public class Talla {
    
        public static void main(String[] args) {
                    long startTime= System.currentTimeMillis();
-           int talla=7000;
+           int talla=10;
            int matriz[][] = new int[talla][talla];
            for (int i=0; i < talla; i++) {
                 for (int j=0; j < talla; j++) {
