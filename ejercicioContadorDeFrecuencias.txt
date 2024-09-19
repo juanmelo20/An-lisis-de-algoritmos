@@ -1,0 +1,446 @@
+Juan Carlos Melo Perez-192114
+
+Ejerciciojava06											#INICIO ARCHIVOJAVA06
+package com.jmrh.ejerciciojava06;								-> 1
+
+import java.util.Scanner;									-> 1
+
+public class EjercicioJava06 {									-> 1
+
+    private static Tablero tablero; 								-> 1
+    private static Scanner scanner;								-> 1
+    private static boolean partidaEnJuego;							-> 1
+
+    public static void main(String[] args) {							-> 1
+
+        scanner = new Scanner(System.in);							-> 1
+        menuPrincipal();									-> n
+
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> N + 3 -> N
+
+    public static void menuPrincipal() {							-> 1
+
+        int opcion;										-> 1
+
+        do {											-> n
+            System.out.println("\nMenu Principal\n");						-> n
+            System.out.println("1. Iniciar Nueva Partida");					-> n
+            System.out.println("2. Continuar partida actual");					-> n
+            System.out.println("3. Salir");							-> n
+            System.out.println("Introduce opción: ");						-> n
+
+            try {										-> n
+                opcion = Integer.parseInt(scanner.nextLine());					-> n
+            } catch (Exception e) {								-> n
+                opcion = 0;									-> n
+            }											-> n
+
+            switch (opcion) {									-> n
+                case 1:										-> n
+                    iniciarPartida();								-> n
+                    break;									-> n
+                case 2:										-> n
+                    if(partidaEnJuego)								-> n
+                        continuarPartida();							-> n
+                    else									-> n
+                        System.out.println("No hay partida en juego");				-> n
+                    break;									-> n
+                case 3:										-> n
+                    System.out.println("Fin del juego");					-> n
+                    break;									-> n
+                default:									-> n
+                    System.out.println("Opción desconocida");					-> n
+            }											-> n
+
+        } while (opcion != 3);									-> n + 1
+
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 28N + 4 -> N
+
+    public static void iniciarPartida() {							-> 1
+        tablero = new Tablero();								-> 1
+        partidaEnJuego = true;									-> 1
+        juego();										-> n^2 + n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> N^2 + N + 4 -> N^2 + N
+    
+    public static void continuarPartida() {							-> 1
+        juego();										-> n^2 + n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> N^2 + N + 2 -> N^2 + N
+
+    public static void juego() {								-> 1
+        String direccion;									-> 1
+
+        do {											-> n
+        tablero.mostrar();									-> n^2 + n
+        System.out.println("izq (a) / der (d) / arriba (w) / abajo (s) / menu (m): ");		-> n
+        direccion = scanner.nextLine();								-> n
+
+        switch (direccion) {									-> n
+            case "w":										-> n
+                tablero.moverArriba();								-> n
+                break;										-> n
+            case "s":										-> n
+                tablero.moverAbajo();								-> n
+                break;										-> n
+            case "a":										-> n
+                tablero.moverIzquierda();							-> n
+                break;										-> n
+            case "d":										-> n
+                tablero.moverDerecha();								-> n
+                break;										-> n
+            case "m":										-> n
+                System.out.println("Volviendo al menu...");					-> n
+                break;										-> n
+            default:										-> n
+                System.out.println("Opción desconocida");					-> n
+        }											-> n
+        
+        } while(!direccion.equals("m") && !tablero.finPartida());				-> n + 1
+
+        if (tablero.finPartida()) {								-> 1
+            tablero.mostrar();									-> 1
+            String mensaje = tablero.ganador() ? "Has Ganado!!!" : "Has perdido";		-> 1
+            System.out.println(mensaje);							-> 1
+            partidaEnJuego = false;								-> 1
+        }											-> 1
+
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> N^2 + 24N + 10 -> N^2 + N
+
+}												-> 1 
+												# CONTADOR DE FRECUENCIA -> 3N^2 + 5N + 6 -> N^2 + N
+												# FINAL DEL ARCHIVO EJERCICIOJAVA06
+
+Tablero												# INICIO DEL ARCHIVO TABLERO
+package com.jmrh.ejerciciojava06;								-> 1
+
+import java.util.Random;									-> 1
+
+public class Tablero {										-> 1
+    
+    public static final int FIL = 4;								-> 1
+    public static final int COL = 4;								-> 1
+    private final int[][] tablero;								-> 1
+    
+    public Tablero() {										-> 1
+        tablero = new int[FIL][COL];								-> 1
+        for(int f=0;f<FIL;f++) {								-> n + 1
+            for(int c=0;c<COL;c++) {								-> n^2 + n
+                tablero[f][c] = 0;								-> n^2
+            }											-> n^2
+        }    											-> n
+        
+        ponerDos();										-> n
+        ponerDos();										-> n
+        
+               
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 3N^2 + 5N + 3 -> N^2 + N
+    
+    private int vaciasEnFila(int f) {								-> 1
+        int n=0;										-> 1
+        for(int c=0;c<COL;c++) {								-> n + 1
+            if(tablero[f][c]==0) {								-> n
+                n++;										-> n
+            }											-> n
+        }											-> n
+        return n;										-> 1
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 5N + 5 -> N
+
+    private int vaciasEnColumna(int c) {							-> 1
+        int n=0;										-> 1
+        for(int f=0;f<FIL;f++) {								-> n + 1
+            if(tablero[f][c]==0) {								-> n
+                n++;										-> n
+            }											-> n
+        }											-> n
+        return n;										-> 1
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 5N + 5 -> N
+
+    private int vacias() {									-> 1
+        int n=0;										-> 1
+        for(int f=0;f<FIL;f++) {								-> n + 1
+            for(int c=0;c<COL;c++) {								-> n^2 + n
+                if(tablero[f][c]==0) {								-> n^2
+                    n++;									-> n^2
+                }										-> n^2
+            }											-> n^2
+        }											-> n
+        return n;										-> 1
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 5N^2 + 3N + 5 -> N^2 + N
+    
+    private void ponerDos() {									-> 1
+        int f;											-> 1
+        int c;											-> 1
+        
+        Random random = new Random();								-> 1
+        
+        do {											-> n
+            f = random.nextInt(FIL);								-> n
+        } while(vaciasEnFila(f) == 0);								-> n + 1
+        
+        do {											-> n
+            c = random.nextInt(COL);								-> n
+        } while(tablero[f][c] != 0);								-> n + 1
+        
+        tablero[f][c] = 2;									-> 1
+        
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 6N + 8 -> N
+    
+    public void mostrar() {									-> 1
+        for(int f=0;f<FIL;f++) {								-> n + 1
+            dibujaLineaHorizontal();								-> n^2 + n
+            dibujaEspacioHorizontal();								-> n^2 + n
+            System.out.print("|");								-> n
+            for(int c=0;c<COL;c++) {								-> n^2 + n
+                System.out.print("    ");							-> n^2
+                if(tablero[f][c]>=1000)								-> n^2
+                    System.out.print(tablero[f][c]);						-> n^2
+                else if(tablero[f][c] >= 100)							-> n^2
+                    System.out.print(" "+tablero[f][c]);					-> n^2
+                else if(tablero[f][c] >= 10)							-> n^2
+                    System.out.print(" "+tablero[f][c]+" ");					-> n^2
+                else if(tablero[f][c] > 0)							-> n^2
+                    System.out.print("  "+tablero[f][c]+" ");					-> n^2
+                else if(tablero[f][c] == 0)							-> n^2
+                    System.out.print("    ");							-> n^2
+                System.out.print("    |");							-> n^2
+            }											-> n^2
+            System.out.print("\n");								-> n
+            dibujaEspacioHorizontal();								-> n^2 + n
+        } 											-> n
+        dibujaLineaHorizontal();								-> n^2 + n
+    }    											-> 1
+												# CONTADOR DE FRECUENCIA -> 18N^2 + 9N + 3 -> N^2 + N
+
+    private void dibujaLineaHorizontal() {							-> 1
+        
+        System.out.print("|");									-> 1
+        for(int c=0;c<COL;c++) {								-> n + 1
+            for(int i=0;i<12;i++) {								-> n^2 + n
+                System.out.print("-");								-> n^2
+            }											-> n^2
+            System.out.print("|");								-> n
+        }											-> n
+        System.out.print("\n");									-> 1
+        
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 3N^2 + 4N + 5 -> N^2 + N
+    
+    private void dibujaEspacioHorizontal() {							-> 1
+         System.out.print("|");									-> 1
+        for(int c=0;c<COL;c++) {								-> n + 1
+            for(int i=0;i<12;i++) {								-> n^2 + n
+                System.out.print(" ");								-> n^2
+            }											-> n^2
+            System.out.print("|");								-> n
+        }											-> n
+        System.out.print("\n");									-> 1
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 3N^2 + 4N + 5 -> N^2 + N
+    
+    public boolean ganador() {									-> 1
+        for(int f=0;f<FIL;f++) {            							-> n + 1
+            for(int c=0;c<COL;c++) { 								-> n^2 + n
+                if(tablero[f][c]==2048) return true;						-> n^2 
+            }           									-> n^2
+        }  											-> n
+        return false;										-> 1
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 3N^2 + 3N + 4 -> N^2 + N
+    
+    public boolean finPartida() {								-> 1
+        return (ganador() || vacias()==0);							-> n^2 + n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> N^2 + N + 2 -> N^2 + N
+
+    public void moverArriba() {									-> 1
+        for(int c=0; c<COL; c++) {								-> n + 1
+            moverArribaColumna(c);								-> n^2 + n
+        }											-> n
+        if(!finPartida())									-> 1
+                ponerDos();									-> n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> N^2 + 4N + 4 -> N^2 + N
+
+    private void moverArribaColumna(int c) {							-> 1
+        colocarArriba(c);									-> n^2 + n
+        sumarArriba(c);										-> n
+        colocarArriba(c);									-> n^2 + n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 2N^2 + 3N + 2 -> N^2 + N
+
+    private void colocarArriba(int c) {								-> 1
+        
+        if(vaciasEnColumna(c) < COL) {								-> n
+            for(int veces = 0;veces < COL-1;veces++) {						-> n + 1
+                for(int f=0;f<FIL-1;f++) {							-> n^2 + n
+                    if(tablero[f][c]==0) {							-> n^2
+                        tablero[f][c] = tablero[f+1][c];					-> n^2
+                        tablero[f+1][c] = 0;							-> n^2
+                    }										-> n^2
+                }										-> n^2
+            }											-> n
+        }											-> n
+        
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 6N^2 + 5N + 1 -> N^2 + N
+    
+    private void sumarArriba(int c) {								-> 1
+        if(vaciasEnColumna(c)<FIL-1) {								-> n
+            for(int f=0;f<FIL-1;f++) {								-> n + 1
+                if(tablero[f][c] == tablero[f+1][c]) {						-> n
+                    tablero[f][c] *= 2;								-> n
+                    tablero[f+1][c] = 0;							-> n
+                }										-> n
+            }											-> n
+        }											-> n
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 8N + 3 -> N
+    
+    
+    
+    
+    public void moverAbajo() {									-> 1
+        for(int c=0; c<COL; c++) {								-> n + 1
+            moverAbajoColumna(c);								-> n^2 + n
+        }											-> n
+        if(!finPartida())									-> n^2 + n
+                ponerDos();									-> n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 2N^2 + 4N + 3 -> N^2 + N
+
+    private void moverAbajoColumna(int c) {							-> 1
+        colocarAbajo(c);									-> n^2 + n
+        sumarAbajo(c);										-> n
+        colocarAbajo(c);									-> n^2 + n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 2N^2 + 3N + 2 -> N^2 + N
+
+    private void colocarAbajo(int c) {								-> 1
+        
+        if(vaciasEnColumna(c) < COL) {								-> n
+            for(int veces = 0;veces < COL-1;veces++) {						-> n + 1
+                for(int f=FIL-1;f>0;f--) {							-> n^2 + n
+                    if(tablero[f][c]==0) {							-> n^2
+                        tablero[f][c] = tablero[f-1][c];					-> n^2
+                        tablero[f-1][c] = 0;							-> n^2
+                    }										-> n^2
+                }										-> n^2
+            }											-> n
+        }											-> n
+        
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 6N^2 + 5N + 3 -> N^2 + N
+    
+    private void sumarAbajo(int c) {								-> 1
+        if(vaciasEnColumna(c)<FIL-1) {								-> n
+            for(int f=FIL-1;f>0;f--) {								-> n + 1
+                if(tablero[f][c] == tablero[f-1][c]) {						-> n
+                    tablero[f][c] *= 2;								-> n
+                    tablero[f-1][c] = 0;							-> n
+                }										-> n
+            }											-> n
+        }											-> n
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 8N + 3 -> N
+    
+    
+    public void moverDerecha() {								-> 1
+        for(int f=0; f<COL; f++) {								-> n + 1
+            moverDerechaFila(f);								-> n^2 + n
+        }											-> n
+        if(!finPartida())									-> n^2 + n
+                ponerDos();									-> n
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 2N^2 + 4N + 3 -> N^2 + N
+
+    private void moverDerechaFila(int f) {							-> 1
+        colocarDerecha(f);									-> n^2 + n
+        sumarDerecha(f);									-> n
+        colocarDerecha(f);									-> n^2 + n
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 2N^2 + 3N + 2 -> N^2 + N
+
+    private void colocarDerecha(int f) {							-> 1
+        
+        if(vaciasEnFila(f) < FIL) {								-> n
+            for(int veces = 0;veces < COL-1;veces++) {						-> n + 1
+                for(int c=COL-1;c>0;c--) {							-> n^2 + n
+                    if(tablero[f][c]==0) {							-> n^2
+                        tablero[f][c] = tablero[f][c-1];					-> n^2
+                        tablero[f][c-1] = 0;							-> n^2
+                    }										-> n^2
+                }										-> n^2
+            }											-> n
+        }											-> n
+        
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 6N^2 + 5N + 3 -> N^2 + N
+    
+    private void sumarDerecha(int f) {								-> 1
+        if(vaciasEnFila(f)<FIL-1) {								-> n
+            for(int c=COL-1;c>0;c--) {								-> n + 1
+                if(tablero[f][c] == tablero[f][c-1]) {						-> n
+                    tablero[f][c] *= 2;								-> n
+                    tablero[f][c-1] = 0;							-> n
+                }										-> n
+            }											-> n
+        }											-> n
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 8N + 3 -> N
+    
+    public void moverIzquierda() {								-> 1
+        for(int f=0; f<FIL; f++) {								-> n + 1
+            moverIzquierdaFila(f);								-> n^2 + n
+        }											-> n
+        if(!finPartida())									-> n^2 + n
+                ponerDos();									-> n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 2N^2 + 4N + 3 -> N^2 + N
+
+    private void moverIzquierdaFila(int f) {							-> 1
+        colocarIzquierda(f);									-> n^2 + n
+        sumarIzquierda(f);									-> n
+        colocarIzquierda(f);									-> n^2 + n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 2N^2 + 3N + 2 -> N^2 + N
+
+    private void colocarIzquierda(int f) {							-> 1
+        
+        if(vaciasEnFila(f) < FIL) {								-> n
+            for(int veces = 0;veces < COL-1;veces++) {						-> n + 1
+                for(int c=0;c<COL-1;c++) {							-> n^2 + n
+                    if(tablero[f][c]==0) {							-> n^2
+                        tablero[f][c] = tablero[f][c+1];					-> n^2
+                        tablero[f][c+1] = 0;							-> n^2
+                    }										-> n^2
+                }										-> n^2
+            }											-> n
+        }											-> n
+        
+    }												-> 1
+    												# CONTADOR DE FRECUENCIA -> 6N^2 + 5N + 3 -> N^2 + N
+    
+    private void sumarIzquierda(int f) {							-> 1
+        if(vaciasEnFila(f)<FIL-1) {								-> n
+            for(int c=0;c<COL-1;c++) {								-> n + 1
+                if(tablero[f][c] == tablero[f][c+1]) {						-> n
+                    tablero[f][c] *= 2;								-> n
+                    tablero[f][c+1] = 0;							-> n
+                }										-> n
+            }											-> n
+        }											-> n
+    }												-> 1
+												# CONTADOR DE FRECUENCIA -> 8N + 3 -> N
+      
+}												-> 1
+												# CONTADOR DE FRECUENCIA FINAL -> 19N^2 + 26N + 6 -> N^2 + N
+												# FINAL DEL ARCHIVO TABLERO
