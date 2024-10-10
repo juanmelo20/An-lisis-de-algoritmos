@@ -1,0 +1,64 @@
+public class Nodo {
+    int valor;
+    Nodo izquierda;
+    Nodo derecha;
+
+    // Constructor
+    public Nodo(int valor) {
+        this.valor = valor;
+        this.izquierda = null;
+        this.derecha = null;
+    }
+}
+
+// Definición de la clase ArbolBinario
+public class ArbolBinario {
+    Nodo raiz;
+
+    // Método para insertar nodos
+    public void insertar(int valor) {
+        raiz = insertarRecursivo(raiz, valor);
+    }
+
+    // Método recursivo para insertar nodos
+    private Nodo insertarRecursivo(Nodo nodo, int valor) {
+        si (nodo == null) {
+            nodo = new Nodo(valor);
+            retorna nodo;
+        }
+
+        si (valor < nodo.valor) {
+            nodo.izquierda = insertarRecursivo(nodo.izquierda, valor);
+        } sino si (valor > nodo.valor) {
+            nodo.derecha = insertarRecursivo(nodo.derecha, valor);
+        }
+
+        retorna nodo;
+    }
+
+    // Método para recorrer el árbol en orden
+    public void recorrerEnOrden(Nodo nodo) {
+        si (nodo != null) {
+            recorrerEnOrden(nodo.izquierda);
+            imprimir(nodo.valor);
+            recorrerEnOrden(nodo.derecha);
+        }
+    }
+}
+
+// Clase principal
+public class Main {
+    public static void main() {
+        ArbolBinario arbol = new ArbolBinario();
+
+        arbol.insertar(5);
+        arbol.insertar(3);
+        arbol.insertar(7);
+        arbol.insertar(2);
+        arbol.insertar(4);
+        arbol.insertar(6);
+        arbol.insertar(8);
+
+        arbol.recorrerEnOrden(arbol.raiz);
+    }
+}
